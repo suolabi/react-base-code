@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 准备好一个DOM容器 -->
+    <div id="test"></div>
+    <!-- 1.引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 2.引入react-dom，用于支持react的DOM操作 -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 3.引入babel，解析jsx为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        //1.定义一个函数式组件
+        // 组件标签首字母需要大写，如果不大写React就会去找html标签
+        function MyComponent(){
+            console.log('%',this); //此处的this指向是undefined，因为babel编译后开启了严格模式
+			return <h2>我是用函数定义的组件(适用于【简单组件】的定义)</h2>
+        }
+        // 2.渲染虚拟DOM到页面上
+        // 标签必须闭合
+        ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+    </script>
+</body>
+
+</html>

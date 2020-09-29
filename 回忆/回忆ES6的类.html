@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>回忆类</title>
+</head>
+<body>
+	<script type="text/javascript" >
+		//定义一个Person类
+		class Person {
+			//构造器方法
+			constructor(name,age,sex){
+				//构造器中的this是谁？------该类的实例对象/该类子类的实例对象
+				console.log('@',this);
+				this.name = name
+				this.age = age
+				this.sex = sex
+			}
+			/* 
+				speak是类中的一般方法：
+					speak放在了哪里？——————Person的原型对象上
+					speak谁能用？——————Person的实例对象 
+			*/
+			speak() {
+				//speak中的this是谁？——————Person的实例对象
+				console.log(`我的名字是${this.name}年龄是${this.age}性别是${this.sex}`);
+			}
+		}
+		const p1 = new Person('圆圆的海峰',50,'男')
+		// const p2 = new Person('老刘',18,'女')
+		console.log(p1);
+		// console.log(Person.prototype);
+		// p1.speak()
+		// p2.speak()
+		
+		//继承——————目的是让子类的实例也可以用到父类的原型上的方法(复用)
+		class Student extends Person{
+			//构造器函数
+			constructor(...args){
+				//子类如果写了构造器函数，则必须在构造器中调用super
+				//子类中借助super调用父类的构造器函数，可以简化代码 
+				super(...args)
+				// this.school = school //子类自己独有的属性，要亲自放在自身，不能借助super了
+			}
+		}
+		// const s1 = new Student('tom',18,'男','atguigu')
+		// console.log(s1);
+		// s1.speak()
+		
+	</script>
+</body>
+</html>

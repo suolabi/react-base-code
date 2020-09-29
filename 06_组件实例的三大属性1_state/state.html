@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>state的基本使用</title>
+</head>
+
+<body>
+	<!-- 准备好一个DOM容器 -->
+	<div id="test"></div>
+	<!-- 1.引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 2.引入react-dom，用于支持react的DOM操作 -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 3.引入babel，解析jsx为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		//1.定义一个组件
+		class Weather extends React.Component {
+			constructor(...args){
+                super(...args)
+                // 初始化定义值最好在构造器中,isHot是天气热不热的标识
+                this.state={isHot:false}
+				// 赋值语句，构造器中的this一定是组件的实例对象
+				// 通过this实例对象找到changeWeather方法，调用bind改变this指向，改为组件的实例对象
+				// bind方法有返回值。返回一个新的函数,就是把this改了
+				this.changeWeather = this.changeWeather.bind(this)
+			}
+			render(){
+                // this是Weather的实例对象，state值为null，null代表暗示多半放的是对象
+                // console.log(this)
+                // React将所有的on事件进行了封装
+				// 1.为了实现兼容性
+				// 2.为了实现高效，使用了事件委托重写了一套
+
+				// 如果在react标签中写了函数调用的小括号，会立即执行，无论是不是点击事件或者其他的
+				// onClick={changeWeather}: 这样写叫做指定onClick的回调，通过实例对象把原型上的方法给onClick用了，this指向了undefined
+				// onClick={changeWeather()}: 这样写叫做把changeWeather()函数的返回值制定给了onClick
+                return <h1 onClick={this.changeWeather}>今天天气很{this.state.isHot? "炎热":"凉爽"}</h1>
+			}
+			//一般方法
+			changeWeather(){
+			console.log(this);  // undefined  不能使用this
+			//严重注意：状态(state)是不可以直接修改的，下面这行就是直接修改。
+			// 需要通过原型上的方法setState来修改
+			// that.state.isHot = true
+			const {isHot} = this.state
+			this.setState({isHot:!isHot})
+			}
+		}
+		//2.渲染组件到页面
+		ReactDOM.render(<Weather/>,document.getElementById('test'))
+
+		
+	</script>
+</body>
+
+</html>
